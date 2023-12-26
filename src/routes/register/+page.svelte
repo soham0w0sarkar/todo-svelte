@@ -26,6 +26,8 @@
         headers: {
           'Content-Type': 'application/json',
         },
+        withCredentials: true,
+        credentials: 'include',
         body: JSON.stringify({ name, email, password }),
       });
 
