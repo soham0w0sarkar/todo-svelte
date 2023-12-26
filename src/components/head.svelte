@@ -1,17 +1,23 @@
 <script>
-  import { UserOutline } from 'flowbite-svelte-icons';
+  import { createEventDispatcher } from 'svelte';
   import { onMount } from 'svelte';
+  import { tasks } from '../lib/store.js';
+
+  const dispatch = createEventDispatcher();
+
   let show = false;
 
-  const me = async () => {
+  const amIlogined = async () => {
     try {
       const res = await fetch('http://localhost:8080/api/v1/user/amIloggedIn', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
+        withCredentials: true,
         credentials: 'include',
       });
+
       const data = await res.json();
 
       if (data.success) {
@@ -20,24 +26,29 @@
         show = false;
       }
     } catch (error) {
-      console.log(error.message);
+      console.error(error.message);
     }
   };
 
   onMount(async () => {
-    await me();
+    await amIlogined();
   });
+
+  const handleClickLogout = () => {
+    dispatch('logout');
+    show = !show;
+    $tasks = [];
+  };
 </script>
 
-<nav>
-  <button class={show}><UserOutline /></button>
-  <button class={show}>Logout</button>
+<nav class="head">
+  <button class={show} on:click={handleClickLogout}>Logout</button>
   <button class={!show}><a href="/login">Login</a></button>
   <button class={!show}><a href="/register">Register</a></button>
 </nav>
 
 <style>
-  nav {
+  .head {
     display: flex;
     justify-content: flex-end;
     padding: 1rem;
