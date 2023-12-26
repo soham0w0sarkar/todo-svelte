@@ -1,7 +1,7 @@
 <script>
   import Spinner from '../../components/spinner.svelte';
   import { goto } from '$app/navigation';
-
+  
   let email = '';
   let password = '';
 
@@ -25,11 +25,12 @@
         headers: {
           'Content-Type': 'application/json',
         },
+        withCredentials: true,
+        credentials: 'include',
         body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
-      console.log(data);
 
       if (data.success) {
         goto('/');
