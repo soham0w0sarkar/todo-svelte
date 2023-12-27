@@ -1,7 +1,7 @@
 <script>
   import Spinner from '../../components/spinner.svelte';
   import { goto } from '$app/navigation';
-  
+
   let email = '';
   let password = '';
 
@@ -39,7 +39,7 @@
         return;
       }
     } catch (error) {
-      alert(error.message);
+      console.error(error.message);
     }
   };
 </script>

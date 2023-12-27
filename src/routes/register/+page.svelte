@@ -40,7 +40,7 @@
         return;
       }
     } catch (error) {
-      alert(error.message);
+      console.log(error.message);
     }
   };
 </script>
