@@ -1,6 +1,8 @@
 <script>
   import Head from '../components/head.svelte';
   import TodoContainer from '../components/todoContainer.svelte';
+  import { tasks } from '../lib/store.js';
+  import { onMount } from 'svelte';
 
   const handleLogout = async () => {
     try {
@@ -14,9 +16,38 @@
       });
       const data = await res.json();
     } catch (error) {
-      alert(error.message);
+      console.log(error.message);
     }
   };
+  const handleIfLogin = async () => {
+    try {
+      const res = await fetch('http://localhost:8080/api/v1/task/myTask', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+        credentials: 'include',
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        for (let i = 0; i < data.tasks.length; i++) {
+          $tasks = [
+            ...$tasks,
+            { id: data.tasks[i]._id, text: data.tasks[i].title, done: data.tasks[i].completed },
+          ];
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  onMount(async () => {
+    await handleIfLogin();
+  });
 </script>
 
 <svelte:head>
