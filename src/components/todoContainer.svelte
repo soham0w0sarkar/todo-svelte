@@ -1,29 +1,20 @@
 <script>
   import TodoCard from './todoCard.svelte';
-  import { onMount } from 'svelte';
   import { tasks } from '../lib/store.js';
+  import { onMount } from 'svelte';
+  import Head from './head.svelte';
 
-  const handleIfLogin = async () => {
+  const handleTasksPresent = async () => {
     try {
-      const res = await fetch('http://localhost:8080/api/v1/task/myTask', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-        credentials: 'include',
-      });
+      let tempTasks = [...$tasks];
+      if (tempTasks.length > 0)
+        for (let i = 0; i < tempTasks.length; i++) {
+          const data = await add(tempTasks[i].text);
+          tempTasks[i].id = data.id;
 
-      const data = await res.json();
-
-      if (data.success) {
-        for (let i = 0; i < data.tasks.length; i++) {
-          $tasks = [
-            ...$tasks,
-            { id: data.tasks[i]._id, text: data.tasks[i].title, done: data.tasks[i].completed },
-          ];
+          if (tempTasks[i].done) await update(tempTasks[i].id, 'PUT');
         }
-      }
+        $tasks = [...new Map([...$tasks, ...tempTasks].map(item => [item.id, item])).values()];
     } catch (error) {
       console.error(error);
     }
@@ -31,8 +22,13 @@
 
   const handleAdd = async (event) => {
     const task = prompt('Enter a new task');
-    await add(task);
-    $tasks = [...$tasks, { id: $tasks.length + 1, text: task, done: false }];
+    const data = await add(task);
+
+    if (data.success) {
+      $tasks = [...$tasks, { id: data.id, text: task, done: false }];
+      return;
+    }
+    $tasks = [...$tasks, { id: Date.now(), text: task, done: false }];
   };
 
   const add = async (title) => {
@@ -47,9 +43,8 @@
         credentials: 'include',
       });
       const data = await res.json();
-      if (data.success) {
-        $tasks = [...$tasks, { id: data.id, text: title, done: false }];
-      }
+
+      return data;
     } catch (error) {
       console.error(error);
       return;
@@ -70,7 +65,7 @@
     $tasks = $tasks.map((task) =>
       task.id === event.detail ? { ...task, done: !task.done } : task,
     );
-    tasks.sort((a, b) => a.done - b.done);
+    $tasks.sort((a, b) => a.done - b.done);
     await update(event.detail, 'PUT');
   };
 
@@ -89,15 +84,13 @@
         withCredentials: true,
         credentials: 'include',
       });
-
-      const data = await res.json();
     } catch (error) {
       console.error(error);
     }
   };
 
   onMount(async () => {
-    await handleIfLogin();
+    await handleTasksPresent();
   });
 </script>
 
