@@ -7,14 +7,20 @@
   const handleTasksPresent = async () => {
     try {
       let tempTasks = [...$tasks];
-      if (tempTasks.length > 0)
-        for (let i = 0; i < tempTasks.length; i++) {
-          const data = await add(tempTasks[i].text);
-          tempTasks[i].id = data.id;
 
-          if (tempTasks[i].done) await update(tempTasks[i].id, 'PUT');
-        }
-        $tasks = [...new Map([...$tasks, ...tempTasks].map(item => [item.id, item])).values()];
+      if (tempTasks.length > 0) {
+        await Promise.all(
+          tempTasks.map(async (task) => {
+            const data = await add(task.text);
+            task.id = data.id;
+
+            if (task.done) {
+              await update(task.id, 'PUT');
+            }
+          }),
+        );
+      }
+      $tasks = [...new Map([...$tasks, ...tempTasks].map((item) => [item.id, item])).values()];
     } catch (error) {
       console.error(error);
     }
