@@ -60,6 +60,7 @@
       console.error(error);
     }
   };
+
   const add = async (title) => {
     try {
       const res = await fetch('http://localhost:8080/api/v1/task/create', {
