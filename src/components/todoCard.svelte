@@ -3,6 +3,8 @@
   export let task;
   export let id;
   export let done = true;
+  export let completedBy = "";
+  export let createdBy = "";
 
   const dispatch = createEventDispatcher();
 
@@ -22,8 +24,9 @@
     : '4px solid red'}"
 >
   {task}
-  <button class="done-button" on:click={handleDone}></button>
-  <button class="trash-button" on:click={handleDelete}></button>
+  <span style="color:{done ? 'green' : 'red'}"> {done ? `Completed by ${completedBy}` : `Created by ${createdBy}`}</span>
+  <div class="buttons"><button class="done-button" on:click={handleDone}></button>
+    <button class="trash-button" on:click={handleDelete}></button></div>
 </div>
 
 <style>
@@ -32,7 +35,7 @@
     height: 50px;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     padding: 0.5rem 1rem;
     margin-top: 10px;
     font-size: 1.5rem;
@@ -40,6 +43,16 @@
     border: none;
     border-radius: 5px;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+  }
+  .todo-card:hover {
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.8);
+  }
+  span {
+    font-size: 1rem;
+  }
+  .buttons {
+    display: flex;
+    align-items: center;
   }
   .done-button,
   .trash-button {
@@ -57,7 +70,6 @@
   }
   .done-button {
     border: 1px solid green;
-    margin-left: auto; /* pushes the buttons to the right */
   }
   .trash-button {
     border: 1px solid red;

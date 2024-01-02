@@ -26,7 +26,7 @@
 
   socket.on('updatedTask', (task) => {
     $tasks = $tasks.map((tsk) =>
-      tsk.id === task._id ? { id: task._id, text: task.title, done: task.completed} : tsk,
+      tsk.id === task._id ? { id: task._id, text: task.title, done: task.completed } : tsk,
     );
     console.log($tasks);
   });
@@ -38,7 +38,6 @@
   socket.on('error', (err) => {
     console.error(err);
   });
-
 
   const disconnectHandler = () => socket.disconnect();
 
@@ -98,7 +97,6 @@
     on:delete={(e) => update(...e.detail)}
   />
 </div>
-
 
 <style>
   .todo {

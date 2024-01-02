@@ -54,19 +54,24 @@
   <h1>Register</h1>
   <label>
     <span>Name</span>
-    <input type="text" name="Name" placeholder="Name" bind:value={name} required/>
+    <input type="text" name="Name" placeholder="Name" bind:value={name} required />
   </label>
   <label>
     <span>Email</span>
-    <input type="email" name="email" placeholder="Email" bind:value={email} required/>
+    <input type="email" name="email" placeholder="Email" bind:value={email} required />
   </label>
   <label>
     <span>Company Id</span>
-    <input type="text" name="companyId" placeholder="Company Id (if you have)" bind:value={companyId}/>
+    <input
+      type="text"
+      name="companyId"
+      placeholder="Company Id (if you have)"
+      bind:value={companyId}
+    />
   </label>
   <label>
     <span>Password</span>
-    <input type="password" name="password" placeholder="Password" bind:value={password} required/>
+    <input type="password" name="password" placeholder="Password" bind:value={password} required />
   </label>
   <button on:click={handleClick}> Register </button>
 </div>
