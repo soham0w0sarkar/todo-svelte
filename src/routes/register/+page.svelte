@@ -5,6 +5,7 @@
   let name = '';
   let email = '';
   let password = '';
+  let companyId = '';
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -28,7 +29,7 @@
         },
         withCredentials: true,
         credentials: 'include',
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name, email, password, companyId }),
       });
 
       const data = await res.json();
@@ -53,15 +54,19 @@
   <h1>Register</h1>
   <label>
     <span>Name</span>
-    <input type="text" name="Name" placeholder="Name" bind:value={name} />
+    <input type="text" name="Name" placeholder="Name" bind:value={name} required/>
   </label>
   <label>
     <span>Email</span>
-    <input type="email" name="email" placeholder="Email" bind:value={email} />
+    <input type="email" name="email" placeholder="Email" bind:value={email} required/>
+  </label>
+  <label>
+    <span>Company Id</span>
+    <input type="text" name="companyId" placeholder="Company Id (if you have)" bind:value={companyId}/>
   </label>
   <label>
     <span>Password</span>
-    <input type="password" name="password" placeholder="Password" bind:value={password} />
+    <input type="password" name="password" placeholder="Password" bind:value={password} required/>
   </label>
   <button on:click={handleClick}> Register </button>
 </div>
