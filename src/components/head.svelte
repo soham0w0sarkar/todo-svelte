@@ -1,5 +1,4 @@
 <script>
-  import { goto } from '$app/navigation';
   import { createEventDispatcher } from 'svelte';
   import { onMount } from 'svelte';
   import { tasks } from '../lib/store.js';
@@ -43,7 +42,8 @@
 </script>
 
 <nav class="head">
-  <button class={!show}><a href="/company/register">Register Company</a></button>
+  <button class={show}><a href="/company/register">Register Company</a></button>
+  <button class={show}><a href="/company">Company</a></button>
   <button class={show} on:click={handleClickLogout}>Logout</button>
   <button class={!show}><a href="/login">Login</a></button>
   <button class={!show}><a href="/register">Register</a></button>
