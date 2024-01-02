@@ -1,58 +1,36 @@
-# create-svelte
+## TODO with realtime feature
 
-Everything you need to build a Svelte library, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+This is a todo app with realtime feature using svelte and a backend server using nodejs and socket.io
 
-Read more about creating a library [in the docs](https://kit.svelte.dev/docs/packaging).
-
-## Creating a project
+## Cloning and running the app
 
 If you're seeing this, you've probably already done this step. Congrats!
 
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
+# clone the repo
+git clone https://github.com/soham0w0sarkar/todo-svelte.git
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+# move into the project directory
+cd todo-svelte
 
-## Developing
+# install dependencies
+npm install
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
+# run the app
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
+## Backend server
 
-## Building
+clone the backend server from [here](https://github.com/soham0w0sarkar/Todo-app-API.git)
 
-To build your library:
+further instructions are given in the repo
 
-```bash
-npm run package
-```
+## Features
 
-To create a production version of your showcase app:
+- login, signup and logout
+- register company
+- add, delete and update todos
+- while logined in, you can see the todo you created before logout
+- when you click the company button, by entering the companyId you can see the todos of that company in realtime
 
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
-
-## Publishing
-
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
-
-To publish your library to [npm](https://www.npmjs.com):
-
-```bash
-npm publish
-```
