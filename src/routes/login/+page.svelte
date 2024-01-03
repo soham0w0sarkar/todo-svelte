@@ -1,6 +1,7 @@
 <script>
   import Spinner from '../../components/spinner.svelte';
   import { goto } from '$app/navigation';
+  const API_PORT = import.meta.env.VITE_API_PORT;
 
   let email = '';
   let password = '';
@@ -20,7 +21,7 @@
 
   const login = async () => {
     try {
-      const res = await fetch('http://localhost:8080/api/v1/user/login', {
+      const res = await fetch(`http://localhost:${API_PORT}/api/v1/user/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

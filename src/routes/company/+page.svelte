@@ -3,8 +3,9 @@
   import { onMount, onDestroy } from 'svelte';
   import { tasks } from '../../lib/store.js';
   import TodoContainer from '../../components/todoContainer.svelte';
+  const API_PORT = import.meta.env.VITE_API_PORT;
 
-  const socket = io('http://localhost:8080');
+  const socket = io(`http://localhost:${API_PORT}`);
 
   socket.on('connect', () => {
     console.log('Connected to the socket server');
@@ -43,7 +44,7 @@
 
   const getUser = async () => {
     try {
-      const res = await fetch('http://localhost:8080/api/v1/user/me', {
+      const res = await fetch(`http://localhost:${API_PORT}/api/v1/user/me`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

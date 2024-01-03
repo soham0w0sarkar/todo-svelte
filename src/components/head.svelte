@@ -2,6 +2,7 @@
   import { createEventDispatcher } from 'svelte';
   import { onMount } from 'svelte';
   import { tasks } from '../lib/store.js';
+  const API_PORT = import.meta.env.VITE_API_PORT;
 
   const dispatch = createEventDispatcher();
 
@@ -9,7 +10,7 @@
 
   const amIlogined = async () => {
     try {
-      const res = await fetch('http://localhost:8080/api/v1/user/amIloggedIn', {
+      const res = await fetch(`http://localhost:${API_PORT}/api/v1/user/amIloggedIn`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
