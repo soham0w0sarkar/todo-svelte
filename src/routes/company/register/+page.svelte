@@ -1,6 +1,9 @@
 <script>
   import { goto } from '$app/navigation';
   const API_PORT = import.meta.env.VITE_API_PORT;
+  import MessageCard from '../../../components/messageCard.svelte';
+  import { message, type } from '../../../lib/store.js';
+
   let name = '';
   let companyId = '';
 
@@ -34,13 +37,18 @@
       alert(data.message);
 
       if (data.success) {
+        showMessage()$;
+        message = 'Company registered succesfully';
+        $type = 'message';
         goto('/');
       } else {
         alert(data.message);
         return;
       }
     } catch (error) {
-      console.log(error.message);
+      showMessage()$;
+      message = error.message;
+      $type = 'error';
     }
   };
 </script>

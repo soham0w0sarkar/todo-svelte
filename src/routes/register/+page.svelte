@@ -1,5 +1,7 @@
 <script>
+  import MessageCard from '../../components/messageCard.svelte';
   import Spinner from '../../components/spinner.svelte';
+  import { message, type, show , showMessage} from '../../lib/store.js';
   import { goto } from '$app/navigation';
   const API_PORT = import.meta.env.VITE_API_PORT;
 
@@ -13,7 +15,11 @@
     e.target.disabled = true;
     e.target.innerHTML = `<Spinner />`;
     if (!name || !email || !password) {
-      alert('Please fill all the fields');
+      showMessage();
+      $message = 'Fill all the required data';
+      $type = 'error';
+      e.target.disabled = false;
+      e.target.innerHTML = `Register`;
       return;
     }
     register();
@@ -36,13 +42,15 @@
       const data = await res.json();
 
       if (data.success) {
+        showMessage();
+        $message = 'Registered succesfully';
+        $type = 'message';
         goto('/');
-      } else {
-        alert(data.message);
-        return;
       }
     } catch (error) {
-      console.log(error.message);
+      showMessage();
+      $message = error.message;
+      $type = 'error';
     }
   };
 </script>
@@ -76,6 +84,7 @@
   </label>
   <button on:click={handleClick}> Register </button>
 </div>
+<MessageCard message={$message} messagetype={$type} show={$show} />
 
 <style>
   .main {

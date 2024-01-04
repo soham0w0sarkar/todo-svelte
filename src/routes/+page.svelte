@@ -1,7 +1,8 @@
 <script>
   import Head from '../components/head.svelte';
   import TodoContainer from '../components/todoContainer.svelte';
-  import { tasks } from '../lib/store.js';
+  import MessageCard from '../components/messageCard.svelte';
+  import { tasks, message, type, show } from '../lib/store.js';
   import { onMount } from 'svelte';
   const API_PORT = import.meta.env.VITE_API_PORT;
 
@@ -17,7 +18,9 @@
       });
       const data = await res.json();
     } catch (error) {
-      console.log(error.message);
+      showMessage();
+      $message = error.message;
+      $type = 'error';
     }
   };
 
@@ -58,7 +61,9 @@
         $tasks = [...new Map([...$tasks, ...tempTasks].map((item) => [item.id, item])).values()];
       }
     } catch (error) {
-      console.error(error);
+      showMessage();
+      $message = error.message;
+      $type = 'error';
     }
   };
 
@@ -81,7 +86,9 @@
       }
       $tasks = [...$tasks, { id: Date.now(), text: title, done: false }];
     } catch (error) {
-      console.error(error);
+      showMessage();
+      $message = error.message;
+      $type = 'error';
     }
   };
 
@@ -96,7 +103,9 @@
         credentials: 'include',
       });
     } catch (error) {
-      console.error(error);
+      showMessage();
+      $message = error.message;
+      $type = 'error';
     }
   };
 
@@ -117,6 +126,7 @@
     on:delete={(e) => update(...e.detail)}
   />
 </div>
+<MessageCard message={$message} messagetype={$type} show={$show} />
 
 <style>
   .head {

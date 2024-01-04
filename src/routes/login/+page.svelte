@@ -1,6 +1,8 @@
 <script>
   import Spinner from '../../components/spinner.svelte';
   import { goto } from '$app/navigation';
+  import { message, type , showMessage} from '../../lib/store.js';
+
   const API_PORT = import.meta.env.VITE_API_PORT;
 
   let email = '';
@@ -34,13 +36,18 @@
       const data = await res.json();
 
       if (data.success) {
+        showMessage();
+        $message = 'Loggined succesfully';
+        $type = 'message';
         goto('/');
       } else {
         alert(data.message);
         return;
       }
     } catch (error) {
-      console.error(error.message);
+      showMessage();
+      $message = error.message;
+      $type = 'error';
     }
   };
 </script>

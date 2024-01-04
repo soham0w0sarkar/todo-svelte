@@ -1,18 +1,25 @@
 <script>
+  import MessageCard from '../../components/messageCard.svelte';
   import io from 'socket.io-client';
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount } from 'svelte';
   import { tasks } from '../../lib/store.js';
   import TodoContainer from '../../components/todoContainer.svelte';
+  import { message, type, showMessage ,show} from '../../lib/store.js';
+
   const API_PORT = import.meta.env.VITE_API_PORT;
 
   const socket = io(`http://localhost:${API_PORT}`);
 
   socket.on('connect', () => {
-    console.log('Connected to the socket server');
+    showMessage();
+    $message = 'Connected to server';
+    $type = 'message';
   });
 
   socket.on('connect_error', (error) => {
-    console.error('Error connecting to the socket server:', error);
+    showMessage();
+    $message = error.message;
+    $type = 'error';
   });
 
   socket.on('tasks', (task) => {
@@ -23,24 +30,32 @@
 
   socket.on('newTask', (task) => {
     $tasks = [...$tasks, { id: task._id, text: task.title, done: task.completed }];
+    showMessage();
+    $message = 'New task created';
+    $type = 'message';
   });
 
   socket.on('updatedTask', (task) => {
     $tasks = $tasks.map((tsk) =>
       tsk.id === task._id ? { id: task._id, text: task.title, done: task.completed } : tsk,
     );
-    console.log($tasks);
+    showMessage();
+    $message = 'Updated task';
+    $type = 'message';
   });
 
   socket.on('deletedTask', (task) => {
     $tasks = $tasks.filter((t) => t.id !== task._id);
+    showMessage();
+    $message = 'Deleted Task';
+    $type = 'message';
   });
 
   socket.on('error', (err) => {
-    console.error(err);
+    showMessage();
+    $message = err.message;
+    $type = 'error';
   });
-
-  const disconnectHandler = () => socket.disconnect();
 
   const getUser = async () => {
     try {
@@ -61,7 +76,9 @@
 
   const join = async (companyId, user) => {
     if (!companyId) {
-      console.error('You are not an employee!!');
+      showMessage();
+      $message = 'You are not an employee!!';
+      $type = 'error';
       return;
     }
     socket.emit('join', companyId, user);
@@ -80,14 +97,8 @@
   };
 
   onMount(async () => {
-    const companyId = prompt('Enter your company id');
     const user = await getUser();
     await join(user.companyId, user);
-    window.addEventListener('beforeunload', disconnectHandler);
-  });
-
-  onDestroy(() => {
-    window.removeEventListener('beforeunload', disconnectHandler);
   });
 </script>
 
@@ -102,6 +113,7 @@
     on:delete={(e) => update(...e.detail)}
   />
 </div>
+<MessageCard message={$message} messagetype={$type} show={$show} />
 
 <style>
   .todo {

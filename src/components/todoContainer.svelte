@@ -1,17 +1,25 @@
 <script>
   import TodoCard from './todoCard.svelte';
-  import { tasks } from '../lib/store.js';
+  import MessageCard from './messageCard.svelte';
+  import { tasks, message, type, show , showMessage} from '../lib/store.js';
   import { createEventDispatcher } from 'svelte';
 
   const dispatch = createEventDispatcher();
 
   const handleAdd = async (event) => {
     const task = prompt('Enter a new task');
+    showMessage();
+    $message = 'Added Task';
+    $type = 'message';
     dispatch('add', task);
   };
 
   const handleSelectAll = (event) => {
     $tasks = $tasks.map((task) => ({ ...task, done: !task.done }));
+
+    showMessage();
+    $message = 'Updated all tasks';
+    $type = 'message';
 
     (async () => {
       for (let i = 0; i < tasks.length; i++) {
@@ -25,11 +33,17 @@
       task.id === event.detail ? { ...task, done: !task.done } : task,
     );
     $tasks.sort((a, b) => a.done - b.done);
+    showMessage();
+    $message = 'Task updated';
+    $type = 'message';
     dispatch('done', [event.detail, 'PUT']);
   };
 
   const handleDelete = async (event) => {
     $tasks = $tasks.filter((task) => task.id !== event.detail);
+    showMessage();
+    $message = 'Task Deleted';
+    $type = 'message';
     dispatch('delete', [event.detail, 'DELETE']);
   };
 </script>
@@ -52,6 +66,7 @@
     {/each}
   </div>
 </div>
+<MessageCard message={$message} messagetype={$type} show={$show} />
 
 <style>
   .todo-container {

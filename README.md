@@ -9,16 +9,19 @@ This is a todo app with realtime feature using svelte and a backend server using
 ```bash
 git clone https://github.com/soham0w0sarkar/todo-svelte.git
 ```
+
 2. Move into the project directory
 
 ```bash
 cd todo-svelte
 ```
+
 3. Install dependencies
 
 ```bash
 npm install
 ```
+
 4. Run the app
 
 ```bash
@@ -26,7 +29,7 @@ npm run dev
 ```
 
 5. make a `.env` file in root directory, and add following variables:
-   
+
 ```javascript
 VITE_API_PORT=<port_number_of_your_server>
 ```
