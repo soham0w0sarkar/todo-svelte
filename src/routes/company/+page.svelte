@@ -60,6 +60,10 @@
   };
 
   const join = async (companyId, user) => {
+    if (!companyId) {
+      console.error('You are not an employee!!');
+      return;
+    }
     socket.emit('join', companyId, user);
   };
 
@@ -78,7 +82,7 @@
   onMount(async () => {
     const companyId = prompt('Enter your company id');
     const user = await getUser();
-    await join(companyId, user);
+    await join(user.companyId, user);
     window.addEventListener('beforeunload', disconnectHandler);
   });
 
