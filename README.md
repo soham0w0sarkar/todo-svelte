@@ -44,4 +44,3 @@ further instructions are given in the repo
 - add, delete and update todos
 - while logined in, you can see the todo you created before logout
 - when you click the company button, by entering the companyId you can see the todos of that company in realtime
-

@@ -3,8 +3,8 @@
   export let task;
   export let id;
   export let done = true;
-  export let completedBy = "";
-  export let createdBy = "";
+  export let completedBy = '';
+  export let createdBy = '';
 
   const dispatch = createEventDispatcher();
 
@@ -24,9 +24,13 @@
     : '4px solid red'}"
 >
   {task}
-  <span style="color:{done ? 'green' : 'red'}"> {done ? `Completed by ${completedBy}` : `Created by ${createdBy}`}</span>
-  <div class="buttons"><button class="done-button" on:click={handleDone}></button>
-    <button class="trash-button" on:click={handleDelete}></button></div>
+  <span style="color:{done ? 'green' : 'red'}">
+    {done ? `Completed by ${completedBy}` : `Created by ${createdBy}`}</span
+  >
+  <div class="buttons">
+    <button class="done-button" on:click={handleDone}></button>
+    <button class="trash-button" on:click={handleDelete}></button>
+  </div>
 </div>
 
 <style>
