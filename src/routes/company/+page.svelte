@@ -4,11 +4,11 @@
   import { onMount } from 'svelte';
   import { tasks } from '../../lib/store.js';
   import TodoContainer from '../../components/todoContainer.svelte';
-  import { message, type, showMessage ,show} from '../../lib/store.js';
+  import { message, type, showMessage, show } from '../../lib/store.js';
 
-  const API_PORT = import.meta.env.VITE_API_PORT;
+  //const API_PORT = import.meta.env.VITE_API_PORT;
 
-  const socket = io(`http://localhost:${API_PORT}`);
+  const socket = io(`https://todo-api-9ezo.onrender.com`);
 
   socket.on('connect', () => {
     showMessage();
@@ -59,7 +59,7 @@
 
   const getUser = async () => {
     try {
-      const res = await fetch(`http://localhost:${API_PORT}/api/v1/user/me`, {
+      const res = await fetch(`https://todo-api-9ezo.onrender.com/api/v1/user/me`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

@@ -1,7 +1,7 @@
 <script>
   import TodoCard from './todoCard.svelte';
   import MessageCard from './messageCard.svelte';
-  import { tasks, message, type, show , showMessage} from '../lib/store.js';
+  import { tasks, message, type, show, showMessage } from '../lib/store.js';
   import { createEventDispatcher } from 'svelte';
 
   const dispatch = createEventDispatcher();

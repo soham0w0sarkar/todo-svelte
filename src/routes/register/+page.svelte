@@ -1,9 +1,9 @@
 <script>
   import MessageCard from '../../components/messageCard.svelte';
   import Spinner from '../../components/spinner.svelte';
-  import { message, type, show , showMessage} from '../../lib/store.js';
+  import { message, type, show, showMessage } from '../../lib/store.js';
   import { goto } from '$app/navigation';
-  const API_PORT = import.meta.env.VITE_API_PORT;
+  //const API_PORT = import.meta.env.VITE_API_PORT;
 
   let name = '';
   let email = '';
@@ -29,7 +29,7 @@
 
   const register = async () => {
     try {
-      const res = await fetch(`http://localhost:${API_PORT}/api/v1/user/register`, {
+      const res = await fetch(`https://todo-api-9ezo.onrender.com/api/v1/user/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

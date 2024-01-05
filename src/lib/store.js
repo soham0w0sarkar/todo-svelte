@@ -6,8 +6,8 @@ export const type = writable('');
 export const show = writable(false);
 
 export function showMessage() {
-    show.set(true);
-    setTimeout(() => {
-      show.set(false);
-    }, 2000);
-  }
+  show.set(true);
+  setTimeout(() => {
+    show.set(false);
+  }, 2000);
+}

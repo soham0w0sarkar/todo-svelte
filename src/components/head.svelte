@@ -2,7 +2,7 @@
   import { createEventDispatcher } from 'svelte';
   import { onMount } from 'svelte';
   import { tasks } from '../lib/store.js';
-  const API_PORT = import.meta.env.VITE_API_PORT;
+  //const API_PORT = import.meta.env.VITE_API_PORT;
 
   const dispatch = createEventDispatcher();
 
@@ -10,7 +10,7 @@
 
   const amIlogined = async () => {
     try {
-      const res = await fetch(`http://localhost:${API_PORT}/api/v1/user/amIloggedIn`, {
+      const res = await fetch(`https://todo-api-9ezo.onrender.com/api/v1/user/amIloggedIn`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

@@ -4,11 +4,11 @@
   import MessageCard from '../components/messageCard.svelte';
   import { tasks, message, type, show } from '../lib/store.js';
   import { onMount } from 'svelte';
-  const API_PORT = import.meta.env.VITE_API_PORT;
+  //const API_PORT = import.meta.env.VITE_API_PORT;
 
   const handleLogout = async () => {
     try {
-      const res = await fetch(`http://localhost:${API_PORT}/api/v1/user/logout`, {
+      const res = await fetch(`https://todo-api-9ezo.onrender.com/api/v1/user/logout`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -26,7 +26,7 @@
 
   const handleIfLogin = async () => {
     try {
-      const res = await fetch(`http://localhost:${API_PORT}/api/v1/task/myTask`, {
+      const res = await fetch(`https://todo-api-9ezo.onrender.com/api/v1/task/myTask`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -69,7 +69,7 @@
 
   const add = async (title) => {
     try {
-      const res = await fetch(`http://localhost:${API_PORT}/api/v1/task/create`, {
+      const res = await fetch(`https://todo-api-9ezo.onrender.com/api/v1/task/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -94,7 +94,7 @@
 
   const update = async (id, method) => {
     try {
-      const res = await fetch(`http://localhost:${API_PORT}/api/v1/task/update/${id}`, {
+      const res = await fetch(`https://todo-api-9ezo.onrender.com/api/v1/task/update/${id}`, {
         method,
         headers: {
           'Content-Type': 'application/json',
