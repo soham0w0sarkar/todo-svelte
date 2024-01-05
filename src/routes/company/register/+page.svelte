@@ -34,11 +34,9 @@
 
       const data = await res.json();
 
-      alert(data.message);
-
       if (data.success) {
-        showMessage()$;
-        message = 'Company registered succesfully';
+        showMessage();
+        $message = 'Company registered succesfully';
         $type = 'message';
         goto('/');
       } else {
@@ -46,8 +44,8 @@
         return;
       }
     } catch (error) {
-      showMessage()$;
-      message = error.message;
+      showMessage();
+      $message = error.message;
       $type = 'error';
     }
   };
